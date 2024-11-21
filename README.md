@@ -11,9 +11,11 @@ Consolidar conocimientos sobre expresiones, variables de entorno y funciones en 
 1. **Crear un archivo de flujo de trabajo** llamado `08-expressions.yaml` en la carpeta `.github/workflows` en la raíz del repositorio. El flujo debe cumplir con las siguientes características:
    
    * **Nombre:** 08 Expressions
-   * **Desencadenantes:** Solo `workflow_dispatch`. 
-    - Agregar un parámetro de entrada llamado `debug` de tipo booleano con un valor predeterminado `false`.
-    - Agregar un parámetro de entrada llamado `fail` de tipo booleano con un valor predeterminado `false`.
+   * **Desencadenantes:** 
+    - `pull request`
+    - `workflow_dispatch`. 
+      - Agregar un parámetro de entrada llamado `debug` de tipo booleano con un valor predeterminado `false`.
+      - Agregar un parámetro de entrada llamado `fail` de tipo booleano con un valor predeterminado `false`.
    * **Variables de entorno a nivel de workflow:**
      * `WORKFLOW_VAR`: `'This is a workflow-level variable'`.
      * `OVERWRITTEN`: `'Default workflow value'`.
@@ -109,13 +111,13 @@ Consolidar conocimientos sobre expresiones, variables de entorno y funciones en 
        * Imprimir: `"Workflow cancelled."`
 3. **Confirmar y probar** el flujo de trabajo:
    
-   * Ejecutar el flujo desde la interfaz de usuario con diferentes valores de `debug` y `fail` Observando resultados.
+   * Ejecutar el flujo desde la interfaz de usuario con diferentes valores rama,  `debug` y `fail` Observando resultados.
    * Realizar pruebas con pull requests:
      1. Crear una nueva rama y modificar cualquier archivo, por ejemplo, `README.md`.
-     2. Crear una **Pull Request** con un título que incluya la palabra `"fix"` (por ejemplo: `"Fix: typo in README"`).
-     3. Observar los resultados del flujo de trabajo. Confirma que el step `"Bug Check"` imprime el mensaje `"This PR fixes a bug."`.
+     2. Crear una **Pull Request** con un título que incluya la palabra `"fix"` (por ejemplo: `"Fix: typo in README"`), y una label bug.
+     3. Observar los resultados del flujo de trabajo. Confirma que el step `"Bug Check"` imprime el mensaje `"This PR fixes a bug."`. y se imprimen labels en el step print PR info
      4. Cambiar el título de la PR para que no incluya `"fix"` y volver a inspeccionar los resultados.
-   * Cancelar manualmente el flujo para observar los pasos específicos relacionados con la cancelación.
+   * Cancelar manualmente el flujo nada mas iniciarlo en la ejeción para observar los pasos específicos relacionados con la cancelación. Fijarse en el step On Cancel
 
 ---
 
@@ -213,4 +215,5 @@ graph TD
     G -- if: not cancelled --> O[S Print Always]
     G -- if: cancelled --> P[S: On Cancel]
 ```
-Fixed
+
+
